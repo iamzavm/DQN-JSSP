@@ -7,11 +7,11 @@ import numpy as np
 from keras.layers import Dense, Input
 from keras.models import Model, Sequential
 from keras.optimizers import Adam
-from keras.utils import plot_model
 
-import JobShop
+from envs.JobShop import JobShop
 
-EPISODES = 10000
+#EPISODES = 10000
+EPISODES = 50
 
 
 class DQNAgent:
@@ -128,7 +128,7 @@ if __name__ == "__main__":
     # the main loop for each job shop problem 
     for e in range(EPISODES):
         
-        problem = JobShop.JobShop(number_machine, number_job, 15, 30, True)
+        problem = JobShop.JobShop(number_machine, number_job, 15, 30, False)
         state, score, done = problem.Step()
         action_list = []
         oldscore = 0
@@ -158,10 +158,10 @@ if __name__ == "__main__":
 
         # problem.PlotResult()
         if e % 10 == 0:
-            print("loop : {}/{},  makespan: {} success: {} / 10, e: {:.2}"
+            print("loop : {}/{},  score: {} success: {} / 10, e: {:.2}"
                   .format(e, EPISODES, score, successnumber, agent.epsilon))
             print(action_list, len(action_list))
-            f = open('log/logs', 'a')
+            f = open('../log/logs', 'a')
             f.close()
             successnumber = 0
 
